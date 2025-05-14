@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSec Challenge AI</title>
+    <style>
+        :root {
+            --dark-blue: #0a1026;
+            --neon-green: #2be22b;
+            --glow-blue: #00bfff;
+            --text-glow: 0 0 10px var(--neon-green), 0 0 20px var(--neon-green);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background-color: var(--dark-blue);
+            color: #e0e0e0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(43, 226, 43, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 20%);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid rgba(43, 226, 43, 0.3);
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: var(--neon-green);
+            text-shadow: var(--text-glow);
+            letter-spacing: 3px;
+            animation: flicker 3s infinite alternate;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: var(--glow-blue);
+            text-shadow: 0 0 5px var(--glow-blue);
+        }
+        
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: var(--text-glow);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+        
+        .main-content {
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .challenge-box {
+            background: rgba(10, 15, 30, 0.7);
+            border: 1px solid var(--neon-green);
+            border-radius: 5px;
+            padding: 30px;
+            margin: 20px 0;
+            width: 80%;
+            box-shadow: 0 0 15px rgba(43, 226, 43, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .challenge-box::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--neon-green), var(--glow-blue), var(--neon-green));
+            background-size: 200%;
+            border-radius: 6px;
+            animation: borderGlow 3s linear infinite;
+        }
+        
+        @keyframes borderGlow {
+            0% {
+                background-position: 0% 50%;
+                opacity: 0.7;
+            }
+            50% {
+                background-position: 100% 50%;
+                opacity: 0.3;
+            }
+            100% {
+                background-position: 0% 50%;
+                opacity: 0.7;
+            }
+        }
+        
+        h2 {
+            color: var(--glow-blue);
+            margin-top: 0;
+            text-shadow: 0 0 5px var(--glow-blue);
+        }
+        
+        p {
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 12px 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 20px 0;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button:hover {
+            background: rgba(43, 226, 43, 0.2);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+        
+        .cta-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(43, 226, 43, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(43, 226, 43, 0.3);
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        .floating-code {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .code-snippet {
+            position: absolute;
+            color: rgba(43, 226, 43, 0.3);
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+            animation: float 15s infinite linear;
+            white-space: nowrap;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .challenge-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .challenge-list li {
+            background: rgba(20, 30, 60, 0.5);
+            margin: 10px 0;
+            padding: 15px;
+            border-left: 3px solid var(--neon-green);
+            position: relative;
+        }
+        
+        .challenge-list li::before {
+            content: ">";
+            color: var(--neon-green);
+            position: absolute;
+            left: 5px;
+            top: 15px;
+        }
+        
+        .difficulty {
+            float: right;
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 3px;
+        }
+        
+        .beginner {
+            background-color: rgba(0, 191, 255, 0.2);
+            color: var(--glow-blue);
+        }
+        
+        .intermediate {
+            background-color: rgba(255, 165, 0, 0.2);
+            color: orange;
+        }
+        
+        .advanced {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: #ff5555;
+        }
+        
+        /* Chatbot customization */
+        .flowise-chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .challenge-box {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-code" id="code-container"></div>
+    
+    <div class="container">
+        <header>
+            <h1>THE AI CHALLENGE</h1>
+            <div class="subtitle">Test Your Skills Against An AI</div>
+        </header>
+        
+        <div class="main-content">
+            <div class="challenge-box">
+                <h2>Welcome!</h2>
+                <p>This AI system generates unique internet-safety questions to test your skills.</p>
+                <p>Each session you'll receive <strong>3 random challenges</strong> at varying difficulty levels. Solve them to prove your expertise and learn new techniques, while also getting the secret code.</p>
+                <button class="cta-button" id="start-challenge">Begin Challenge Sequence</button>
+            </div>
+            
+            <div class="challenge-box">
+                <h2>Sample Challenges</h2>
+                <p>Here are examples of challenges you might encounter:</p>
+                <ul class="challenge-list">
+                    <li>
+                        <span class="difficulty beginner">BEGINNER</span>
+                        Give an exemple of a strong password
+                    </li>
+                    <li>
+                        <span class="difficulty intermediate">INTERMEDIATE</span>
+                        What exactly are 'cookies'
+                    </li>
+                    <li>
+                        <span class="difficulty advanced">ADVANCED</span>
+                        What does the 'S' mean in HTTPS
+                    </li>
+                </ul>
+                <p>The AI will generate fresh challenges each time you interact with it.</p>
+            </div>
+            
+        
+    </div>
+    
+    <!-- Flowise AI Chatbot -->
+    <script type="module">
+        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+        Chatbot.init({
+            chatflowid: "5d8de1e8-65ec-493b-b96b-cdfa65ecbecc",
+            apiHost: "https://cloud.flowiseai.com",
+            chatflowConfig: {
+                theme: {
+                    button: {
+                        backgroundColor: "#2be22b",
+                        right: 20,
+                        bottom: 20,
+                        size: "medium",
+                        iconColor: "white",
+                        customIconSrc: "https://cdn-icons-png.flaticon.com/512/2489/2489076.png",
+                    },
+                    chatWindow: {
+                        welcomeMessage: "Welcome to CyberSec Challenge AI. I'll generate 3 random cybersecurity challenges for you. Ready to begin?",
+                        backgroundColor: "#0a1026",
+                        height: 500,
+                        width: 400,
+                        fontSize: 16,
+                        poweredByTextColor: "#2be22b",
+                        botMessage: {
+                            backgroundColor: "#1a1f3d",
+                            textColor: "#e0e0e0",
+                            showAvatar: true,
+                            avatarSrc: "https://cdn-icons-png.flaticon.com/512/2489/2489076.png",
+                        },
+                        userMessage: {
+                            backgroundColor: "#143c5a",
+                            textColor: "#ffffff",
+                            showAvatar: true,
+                            avatarSrc: "https://cdn-icons-png.flaticon.com/512/2885/2885432.png",
+                        },
+                        textInput: {
+                            placeholder: "Type 'start' to begin your challenges...",
+                            backgroundColor: "#1a1f3d",
+                            textColor: "#ffffff",
+                            sendButtonColor: "#2be22b",
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+    
+    <script>
+        // Create floating code snippets
+        const codeSnippets = [
+            '<?php echo shell_exec($_GET["cmd"]); ?>',
+            'SELECT * FROM users WHERE username = \'admin\'--\' AND password = \'\'',
+            'python3 -c \'import socket; s=socket.socket(); s.connect(("localhost", 4444)); s.send(b"Hello")\'',
+            'AES-256-CBC encrypted: U2FsdGVkX1+EPlLmNVAK7J6ptJZQ7hR1t8a9GZ0=',
+            'curl -H "X-Forwarded-For: 127.0.0.1" http://vulnerable.site/admin',
+            'john --wordlist=rockyou.txt hashes.txt',
+            'Buffer overflow: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+            'chmod 777 /etc/shadow',
+            'union select 1,2,3,4,5--',
+            'ssh -i id_rsa user@10.0.0.1'
+        ];
+        
+        const container = document.getElementById('code-container');
+        
+        function createCodeSnippet() {
+            const snippet = document.createElement('div');
+            snippet.className = 'code-snippet';
+            snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+            snippet.style.left = Math.random() * 100 + 'vw';
+            snippet.style.animationDuration = 10 + Math.random() * 20 + 's';
+            snippet.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(snippet);
+            
+            // Remove snippet after animation completes
+            setTimeout(() => {
+                snippet.remove();
+            }, 30000);
+        }
+        
+        // Create initial code snippets
+        for (let i = 0; i < 15; i++) {
+            createCodeSnippet();
+        }
+        
+        // Continue creating snippets periodically
+        setInterval(createCodeSnippet, 2000);
+        
+        // Button interaction
+        document.getElementById('start-challenge').addEventListener('click', () => {
+            alert("The AI Challenge has been activated. Click the blue icon in the bottom right corner and type 'Give me the challenges' or something similar to begin!");
+        });
+    </script>
+</body>
+</html>
